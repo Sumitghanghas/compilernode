@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import MonacoEditor from '@monaco-editor/react';
-import {io} from 'socket.io-client';
+import { io } from 'socket.io-client';
 import './Compiler.css';
 
-const socket= io('http://localhost:5000');
+const socket = io('http://localhost:5000');
 
 const Theams = ['vs', 'vs-dark', 'hc-black'];
 
@@ -25,7 +25,6 @@ const Compiler = () => {
             })),
         ]);
     };
-
 
     const handleInputSubmit = (value) => {
         if (value.trim()) {
@@ -50,61 +49,42 @@ const Compiler = () => {
 int main() {
     int num1, num2, num3, product;
 
-    // Take inputs
     printf("Enter first number: ");
     scanf("%d", &num1);
-
     printf("Enter second number: ");
     scanf("%d", &num2);
-
     printf("Enter third number: ");
     scanf("%d", &num3);
 
-    // Calculate product
     product = num1 * num2 * num3;
 
-    // Print result
     printf("The product of %d, %d, and %d is: %d\\n", num1, num2, num3, product);
-
     return 0;
-}
-`,
+}`,
             cpp: `#include <iostream>
 #include <string>
 using namespace std;
 
 int main() {
     string name1, name2;
-
-    // Ask for the first name
     cout << "Enter the first name: ";
     getline(cin, name1);
-
-    // Ask for the second name
     cout << "Enter the second name: ";
     getline(cin, name2);
-
-    // Display the names
     cout << "You entered: " << name1 << " and " << name2 << endl;
-
     return 0;
-}
-`,
+}`,
             java: `import java.util.Scanner;
 
 public class SumTenNumbers {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int sum = 0;
-
-        // Loop to take input for 10 numbers
         for (int i = 1; i <= 10; i++) {
             System.out.print("Enter number " + i + ": ");
             int num = scanner.nextInt();
-            sum += num; // Add to sum
+            sum += num;
         }
-
-        // Display total sum
         System.out.println("The total sum is: " + sum);
         scanner.close();
     }
@@ -174,12 +154,20 @@ public class SumTenNumbers {
                     {outputLines.map((line, idx) => {
                         if (line.type === 'input-request') {
                             return (
-                                <div key={idx} className="input-line">
-                                    {/* <span className="prompt-line">{outputLines[idx - 1]?.text}</span> */}
+                                <div key={idx} className="output-line input-line-wrapper">
+                                    <span className="prompt-text">
+                                        {outputLines[idx - 1]?.text || ''}
+                                    </span>
                                     <InputLine onSubmit={handleInputSubmit} />
                                 </div>
                             );
                         }
+
+                        // Don't repeat the prompt before input
+                        if (outputLines[idx + 1]?.type === 'input-request') {
+                            return null;
+                        }
+
                         return (
                             <div key={idx} className={line.type}>
                                 {line.text}
@@ -201,21 +189,19 @@ const InputLine = ({ onSubmit }) => {
     }, []);
 
     return (
-        <div className="input-line">
-            <input
-                type="text"
-                ref={inputRef}
-                className="output-input"
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
-                onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                        onSubmit(value);
-                        setValue('');
-                    }
-                }}
-            />
-        </div>
+        <input
+            type="text"
+            ref={inputRef}
+            className="output-input"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                    onSubmit(value);
+                    setValue('');
+                }
+            }}
+        />
     );
 };
 

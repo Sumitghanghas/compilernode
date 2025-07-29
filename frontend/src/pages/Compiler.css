@@ -7,7 +7,7 @@ body {
 }
 
 .compiler-container {
-  height: 100vh;
+  height: 90vh;
   display: flex;
   flex-direction: column;
 }
@@ -54,11 +54,10 @@ body {
 .editor-output-wrapper {
   display: flex;
   flex: 1;
-  min-height: 0; 
+  min-height: 0;
 }
 
-.editor-pane,
-.output-pane {
+.editor-pane {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -66,11 +65,12 @@ body {
   overflow: hidden;
 }
 
-.editor-pane .monaco-editor {
-  flex: 1;
-}
-
 .output-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 94.4%;
+  overflow: hidden;
   background: #121212;
   color: #e0e0e0;
   font-family: monospace;
@@ -83,10 +83,36 @@ body {
 }
 
 .output-line {
-  color: #ccc;
-   display: flex;
+  display: flex;
   align-items: center;
+  white-space: pre-wrap;
   font-family: monospace;
+  color: #ccc;
+}
+
+.input-line-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: 0;
+}
+
+.prompt-text {
+  color: #ccc;
+  white-space: pre;
+  margin-right: 4px;
+}
+
+.output-input {
+  background-color: transparent;
+  border: none;
+  color: #0f0;
+  font-family: monospace;
+  font-size: 1rem;
+  outline: none;
+  width: 200px;
+  padding-left: 0;
+  text-align: left;
 }
 
 .status {
@@ -96,17 +122,6 @@ body {
 
 .error-line {
   color: #ff6b6b;
-}
-
-.input-line {
-  color: #64b5f6;
-}
-
-.input-line-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding-left: 1em;
 }
 
 .compiler-container.dark .top-bar {
@@ -125,26 +140,3 @@ body {
 .compiler-container.dark button:hover {
   background: #555;
 }
-
-.inline-input {
-  display: flex;
-  align-items: center;
-  font-family: monospace;
-}
-
-.prompt-text {
-  white-space: pre-wrap;
-  color: #0f0;
-}
-
-.output-input {
-  background-color: transparent;
-  border: none;
-  color: #0f0;
-  font-family: monospace;
-  font-size: 1rem;
-  outline: none;
-  width: 120px;
-  padding-left: 4px;
-}
-
