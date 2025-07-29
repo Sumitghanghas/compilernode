@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Compiler</title>
+  <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f8f9fa;
+    }
+
+    textarea, select, input, button {
+      display: block;
+      margin: 10px 0;
+      width: 100%;
+      padding: 10px;
+    }
+
+    #output {
+      white-space: pre-wrap;
+      background: #eee;
+      padding: 10px;
+      min-height: 200px;
+      border: 1px solid #ccc;
+      overflow-y: auto;
+      font-family: monospace;
+    }
+
+    .status {
+      color: #666;
+      font-style: italic;
+    }
+
+    .output-line {
+      margin: 1px 0;
+    }
+
+    .input-line {
+      color: #0066cc;
+      margin: 2px 0;
+    }
+
+    .error-line {
+      color: #cc0000;
+    }
+
+    .output-input {
+      border: none;
+      background: transparent;
+      font-family: monospace;
+      font-size: 1em;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 2px;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Compiler</h1>
+
+  <label for="language">Language</label>
+  <select id="language">
+    <option value="javascript">JavaScript</option>
+    <option value="c">C</option>
+    <option value="cpp">C++</option>
+    <option value="java">Java</option>
+  </select>
+
+  <label for="code">Code</label>
+  <textarea id="code" rows="10" placeholder="Write code"></textarea>
+
+  <button onclick="runCode()">Run</button>
+
+  <h3>Output</h3>
+  <pre id="output"></pre>
+
+  <script>
+    const socket = io('http://localhost:5000');
+    let isRunning = false;
+
+    function runCode() {
+      const language= document.getElementById('language').value;
+      const code= document.getElementById('code').value;
+      const output = document.getElementById('output');
+      output.innerHTML = '';
+      addToOutput('Starting program', 'status');
+      if (isRunning) return;
+      isRunning = true;
+      socket.emit('run_code', { language, code });
+    }
+
+    function addToOutput(text, className = '') {
+      const output= document.getElementById('output');
+      const line= document.createElement('div');
+      line.className = className;
+      line.textContent = text;
+      output.appendChild(line);
+      output.scrollTop = output.scrollHeight;
+    }
+
+    function addInputLine() {
+      const output = document.getElementById('output');
+      const inputLine = document.createElement('div');
+      inputLine.className='input-line';
+
+      const input = document.createElement('input');
+      input.type ='text';
+      input.className = 'output-input';
+      input.autofocus = true;
+
+      input.addEventListener('keydown', function(event) {
+        if (event.key  === 'Enter') {
+          const value = input.value.trim();
+          if (value !== '') {
+            socket.emit('input', value);
+            inputLine.textContent =value;
+          } else {
+            inputLine.remove();
+          }
+        }
+      });
+
+      inputLine.appendChild(input);
+      output.appendChild(inputLine);
+      input.focus();
+      output.scrollTop = output.scrollHeight;
+    }
+
+    socket.on('output', data => addToOutput(data, 'output-line'));
+
+    socket.on('error', data => {
+      addToOutput(data, 'error-line');
+      isRunning = false;
+    });
+
+    socket.on('input_request', () => {
+      addInputLine();
+    });
+
+    socket.on('finished', data => {
+      addToOutput(data.message, 'status');
+      isRunning = false;
+    });
+
+    socket.on('compile_error', data => {
+      addToOutput('Compilation Error:\n' + data.message, 'error-line');
+      isRunning = false;
+    });
+  </script>
+</body>
+</html>

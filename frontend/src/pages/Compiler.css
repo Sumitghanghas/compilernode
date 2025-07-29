@@ -1,0 +1,150 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(145deg, #f0f4f8, #e3eaf2);
+  height: 100vh;
+  overflow: hidden;
+}
+
+.compiler-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.top-bar {
+  padding: 15px 25px;
+  background: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #dce3ea;
+  z-index: 1;
+}
+
+.top-bar h2 {
+  margin: 0;
+  color: #0077cc;
+  font-weight: 600;
+}
+
+.controls select,
+.controls button {
+  margin-left: 10px;
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #f7f9fb;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.controls select:focus,
+.controls button:focus {
+  outline: none;
+  border-color: #0077cc;
+}
+
+.controls button:hover {
+  background: #0077cc;
+  color: white;
+}
+
+.editor-output-wrapper {
+  display: flex;
+  flex: 1;
+  min-height: 0; 
+}
+
+.editor-pane,
+.output-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.editor-pane .monaco-editor {
+  flex: 1;
+}
+
+.output-pane {
+  background: #121212;
+  color: #e0e0e0;
+  font-family: monospace;
+  font-size: 14px;
+  padding: 16px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  border-left: 2px solid #444;
+  line-height: 1.5;
+}
+
+.output-line {
+  color: #ccc;
+    display: flex;
+  align-items: center;
+  font-family: monospace;
+}
+
+.status {
+  color: #90a4ae;
+  font-style: italic;
+}
+
+.error-line {
+  color: #ff6b6b;
+}
+
+.input-line {
+  color: #64b5f6;
+}
+
+.input-line-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: 1em;
+}
+
+.compiler-container.dark .top-bar {
+  background: #1f1f1f;
+  color: white;
+  border-bottom: 2px solid #444;
+}
+
+.compiler-container.dark select,
+.compiler-container.dark button {
+  background: #333;
+  color: white;
+  border: 1px solid #555;
+}
+
+.compiler-container.dark button:hover {
+  background: #555;
+}
+
+.inline-input {
+  display: flex;
+  align-items: center;
+  font-family: monospace;
+}
+
+.prompt-text {
+  white-space: pre-wrap;
+  color: #0f0;
+}
+
+.output-input {
+  background-color: transparent;
+  border: none;
+  color: #0f0;
+  font-family: monospace;
+  font-size: 1rem;
+  outline: none;
+  width: 120px;
+  padding-left: 4px;
+}
+
