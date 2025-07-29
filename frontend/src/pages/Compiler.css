@@ -84,7 +84,7 @@ body {
 
 .output-line {
   color: #ccc;
-    display: flex;
+   display: flex;
   align-items: center;
   font-family: monospace;
 }

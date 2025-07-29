@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import MonacoEditor from '@monaco-editor/react';
-import { io } from 'socket.io-client';
+import {io} from 'socket.io-client';
 import './Compiler.css';
 
-const socket = io('http://localhost:5000');
+const socket= io('http://localhost:5000');
 
 const Theams = ['vs', 'vs-dark', 'hc-black'];
 

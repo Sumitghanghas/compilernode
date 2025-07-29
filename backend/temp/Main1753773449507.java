@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Main1753766165643 {
+public class Main1753773449507 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int sum = 0;
