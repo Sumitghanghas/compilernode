@@ -29,7 +29,7 @@ const Compiler = () => {
     const handleInputSubmit = (value) => {
         if (value.trim()) {
             socket.emit('input', value);
-            addToOutput(value, 'input-line');
+            // addToOutput(value, 'input-line');
         }
     };
 
@@ -158,7 +158,20 @@ public class SumTenNumbers {
                                     <span className="prompt-text">
                                         {outputLines[idx - 1]?.text || ''}
                                     </span>
-                                    <InputLine onSubmit={handleInputSubmit} />
+                                    {line.submittedValue !== undefined ? (
+                                        <span className="submitted-value">{line.submittedValue}</span>
+                                    ) : (
+                                        <InputLine
+                                            onSubmit={(value) => {
+                                                handleInputSubmit(value);
+                                                setOutputLines((prev) => {
+                                                    const newLines = [...prev];
+                                                    newLines[idx] = { ...newLines[idx], submittedValue: value };
+                                                    return newLines;
+                                                });
+                                            }}
+                                        />
+                                    )}
                                 </div>
                             );
                         }
@@ -168,12 +181,13 @@ public class SumTenNumbers {
                         }
 
                         return (
-                            <div key={idx} className={line.type}>
+                            <div key={idx} className="output-line">
                                 {line.text}
                             </div>
                         );
                     })}
                 </div>
+
             </div>
         </div>
     );

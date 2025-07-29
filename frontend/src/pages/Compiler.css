@@ -140,3 +140,60 @@ body {
 .compiler-container.dark button:hover {
   background: #555;
 }
+.output-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  white-space: pre-wrap;
+  padding: 2px 0;
+}
+
+.prompt-text {
+  color: #0f0;
+  margin-right: 4px;
+}
+
+.console-input {
+  background: transparent;
+  border: none;
+  color: #fff;
+  outline: none;
+  font-family: monospace;
+  font-size: 1rem;
+  width: auto;
+  flex: 1;
+}
+
+.submitted-value {
+  color: #fff;
+  font-family: monospace;
+}
+.output-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  white-space: pre-wrap;
+  padding: 2px 0;
+}
+
+.prompt-text {
+  color: #0f0;
+  margin-right: 6px;
+  font-family: monospace;
+}
+
+.submitted-value {
+  color: #fff;
+  font-family: monospace;
+}
+
+.console-input {
+  background: transparent;
+  border: none;
+  color: #fff;
+  outline: none;
+  font-family: monospace;
+  font-size: 1rem;
+  flex: 1;
+  width: auto;
+}
