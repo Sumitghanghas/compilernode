@@ -51,7 +51,7 @@ body {
   color: white;
 }
 
-.editor-output-wrapper {
+.editor-output {
   display: flex;
   flex: 1;
   min-height: 0;
@@ -90,7 +90,7 @@ body {
   color: #ccc;
 }
 
-.input-line-wrapper {
+.input-line {
   display: flex;
   align-items: center;
   gap: 6px;

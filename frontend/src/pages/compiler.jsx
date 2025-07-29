@@ -138,7 +138,7 @@ public class SumTenNumbers {
                 </div>
             </div>
 
-            <div className="editor-output-wrapper">
+            <div className="editor-output">
                 <div className="editor-pane">
                     <MonacoEditor
                         height="100%"
@@ -154,7 +154,7 @@ public class SumTenNumbers {
                     {outputLines.map((line, idx) => {
                         if (line.type === 'input-request') {
                             return (
-                                <div key={idx} className="output-line input-line-wrapper">
+                                <div key={idx} className="output-line input-line">
                                     <span className="prompt-text">
                                         {outputLines[idx - 1]?.text || ''}
                                     </span>
@@ -163,7 +163,6 @@ public class SumTenNumbers {
                             );
                         }
 
-                        // Don't repeat the prompt before input
                         if (outputLines[idx + 1]?.type === 'input-request') {
                             return null;
                         }
